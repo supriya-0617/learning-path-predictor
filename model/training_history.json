@@ -1,0 +1,62 @@
+[
+  {
+    "stage": "pretrain",
+    "epoch": 1,
+    "loss": 1.2311732431563238
+  },
+  {
+    "stage": "pretrain",
+    "epoch": 2,
+    "loss": 1.1263265578076243
+  },
+  {
+    "stage": "pretrain",
+    "epoch": 3,
+    "loss": 1.1007851466846963
+  },
+  {
+    "stage": "pretrain",
+    "epoch": 4,
+    "loss": 1.0969961553191145
+  },
+  {
+    "stage": "pretrain",
+    "epoch": 5,
+    "loss": 1.0950990098528564
+  },
+  {
+    "stage": "pretrain",
+    "epoch": 6,
+    "loss": 1.0932514544265965
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 1,
+    "loss": 1.5803309006749442
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 2,
+    "loss": 1.5128746371212494
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 3,
+    "loss": 1.5067135662886892
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 4,
+    "loss": 1.5052577420610782
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 5,
+    "loss": 1.5055659293817076
+  },
+  {
+    "stage": "lfretail-lfmarketbasket",
+    "epoch": 6,
+    "loss": 1.4996664080243434
+  }
+]

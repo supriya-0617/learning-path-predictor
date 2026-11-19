@@ -23,12 +23,18 @@ def test_milestone_1():
     assert len(result["held_out_sequences"]) == 20
 
 
-# Milestone 2: Pretrain a small language model on these course ID sequences.
-@pytest.mark.skip(reason="remove this line when you start milestone 2")
-def test_milestone_2():
-    raise NotImplementedError("write the test for milestone 2")
+def test_milestone_2(tmp_path):
+    from app.core import milestone_2
 
-
+    result = milestone_2(
+        n_sequences=40,
+        seed=123,
+        epochs=1,
+        directory=str(tmp_path / "model"),
+    )
+    assert (tmp_path / "model" / "course_sequence_model.pt").exists()
+    assert (tmp_path / "model" / "course_vocabulary.json").exists()
+    assert len(result["history"]) == 2
 # Milestone 3: Implement a function to predict the next likely course given a partial sequence.
 @pytest.mark.skip(reason="remove this line when you start milestone 3")
 def test_milestone_3():
