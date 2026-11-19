@@ -340,3 +340,13 @@ def milestone_3(
             for course_id in recommendation_ids
         ],
     }
+
+
+# --- Milestone 4: Build Streamlit interface.
+def milestone_4():
+    """Describe the Streamlit options without coupling core tests to Streamlit."""
+    return {
+        "catalogue": get_course_catalogue(),
+        "top_n_options": (1, 10),
+        "widget": "st.multiselect",
+    }

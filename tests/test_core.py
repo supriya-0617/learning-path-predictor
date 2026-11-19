@@ -50,10 +50,12 @@ def test_milestone_3(tmp_path):
     assert "PY101" not in recommendations
     assert all(course in COURSE_CATALOGUE for course in recommendations)
     assert predict_next_courses([], top_n=3, directory=str(model_dir))
-# Milestone 4: Create a Streamlit interface for students to input their completed courses and view recommendations.
-@pytest.mark.skip(reason="remove this line when you start milestone 4")
 def test_milestone_4():
-    raise NotImplementedError("write the test for milestone 4")
+    from app.core import milestone_4
+
+    result = milestone_4()
+    assert result["widget"] == "st.multiselect"
+    assert len(result["catalogue"]) >= 10
 
 
 # Milestone 5: Analyze which course "itemsets" the model has learned.
