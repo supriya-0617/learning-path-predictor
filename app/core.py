@@ -253,3 +253,90 @@ def milestone_2(
         train, epochs=epochs, seed=seed, fine_tune=True
     )
     return save_course_model(model, vocabulary, history, directory)
+
+
+def course_name(course_id: str) -> str:
+    details = COURSE_CATALOGUE.get(course_id)
+    return details["name"] if details else str(course_id)
+
+
+def predict_next_courses(
+    completed_courses: list[str] | tuple[str, ...] | None,
+    top_n: int = 5,
+    directory: str = "model",
+) -> list[str]:
+    """Use the fine-tuned causal LM to rank valid, not-yet-completed courses."""
+    if torch is None:
+        raise RuntimeError("PyTorch is required for course recommendations.")
+
+    top_n = max(1, int(top_n))
+    valid = [] if completed_courses is None else [
+        str(course_id).strip().upper()
+        for course_id in completed_courses
+        if str(course_id).strip().upper() in COURSE_CATALOGUE
+    ]
+    completed = list(dict.fromkeys(valid))
+
+    model, vocabulary = load_course_model(directory)
+    token_to_id = vocabulary["token_to_id"]
+    available = [course_id for course_id in COURSE_IDS if course_id not in completed]
+    if not available:
+        return []
+
+    if not completed:
+        sequences = generate_mock_sequences(n_sequences=1200, seed=42)
+        counts = {course_id: 0 for course_id in available}
+        for sequence in sequences:
+            for course_id in set(sequence):
+                if course_id in counts:
+                    counts[course_id] += 1
+        ranked = sorted(available, key=lambda course_id: (-counts[course_id], course_id))
+        return ranked[:top_n]
+
+    input_ids = [1] + [token_to_id[course_id] for course_id in completed]
+    inputs = torch.tensor([input_ids], dtype=torch.long)
+    with torch.no_grad():
+        logits = model(inputs)[0, -1]
+        probabilities = torch.softmax(logits, dim=-1)
+
+    scores = [
+        (float(probabilities[token_to_id[course_id]].item()), course_id)
+        for course_id in available
+    ]
+    scores.sort(key=lambda item: (-item[0], item[1]))
+    return [course_id for _, course_id in scores[:top_n]]
+
+
+def recommendation_details(
+    completed_courses: list[str] | tuple[str, ...] | None,
+    top_n: int = 5,
+    directory: str = "model",
+) -> list[dict]:
+    return [
+        {
+            "course_id": course_id,
+            "course_name": course_name(course_id),
+            "category": COURSE_CATALOGUE[course_id]["category"],
+        }
+        for course_id in predict_next_courses(completed_courses, top_n, directory)
+    ]
+
+
+# --- Milestone 3: Implement next-course prediction.
+def milestone_3(
+    partial_sequence: list[str] | tuple[str, ...] | None,
+    top_n: int = 5,
+    directory: str = "model",
+):
+    recommendation_ids = predict_next_courses(partial_sequence, top_n, directory)
+    return {
+        "recommendations": recommendation_ids,
+        "details": [
+            {
+                "course_id": course_id,
+                "course_name": course_name(course_id),
+                "category": COURSE_CATALOGUE[course_id]["category"],
+            }
+            for course_id in recommendation_ids
+        ],
+    }
