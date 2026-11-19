@@ -1,0 +1,50 @@
+{
+  "CS101": {
+    "name": "Programming Fundamentals",
+    "category": "Foundations"
+  },
+  "PY101": {
+    "name": "Python Programming",
+    "category": "Programming"
+  },
+  "DSA201": {
+    "name": "Data Structures",
+    "category": "Computer Science"
+  },
+  "DB201": {
+    "name": "Database Management",
+    "category": "Data"
+  },
+  "WEB201": {
+    "name": "Web Development",
+    "category": "Development"
+  },
+  "ST201": {
+    "name": "Statistics for Data Science",
+    "category": "Data"
+  },
+  "ML301": {
+    "name": "Machine Learning",
+    "category": "Machine Learning"
+  },
+  "DS301": {
+    "name": "Data Science",
+    "category": "Data"
+  },
+  "CLD301": {
+    "name": "Cloud Computing",
+    "category": "Cloud"
+  },
+  "AI401": {
+    "name": "Artificial Intelligence",
+    "category": "AI"
+  },
+  "DL401": {
+    "name": "Deep Learning",
+    "category": "AI"
+  },
+  "MLO401": {
+    "name": "MLOps",
+    "category": "Machine Learning"
+  }
+}
