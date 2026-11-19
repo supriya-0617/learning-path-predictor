@@ -1,0 +1,262 @@
+{
+  "min_support": 0.05,
+  "sequence_count": 960,
+  "frequent_course_pairs": [
+    {
+      "courses": [
+        "CS101",
+        "PY101"
+      ],
+      "support": 0.28958333333333336
+    },
+    {
+      "courses": [
+        "ML301",
+        "ST201"
+      ],
+      "support": 0.27395833333333336
+    },
+    {
+      "courses": [
+        "DB201",
+        "PY101"
+      ],
+      "support": 0.2677083333333333
+    },
+    {
+      "courses": [
+        "PY101",
+        "ST201"
+      ],
+      "support": 0.24270833333333333
+    },
+    {
+      "courses": [
+        "DSA201",
+        "PY101"
+      ],
+      "support": 0.22083333333333333
+    },
+    {
+      "courses": [
+        "ML301",
+        "PY101"
+      ],
+      "support": 0.21770833333333334
+    },
+    {
+      "courses": [
+        "CLD301",
+        "DB201"
+      ],
+      "support": 0.21458333333333332
+    },
+    {
+      "courses": [
+        "DS301",
+        "MLO401"
+      ],
+      "support": 0.21145833333333333
+    },
+    {
+      "courses": [
+        "DS301",
+        "PY101"
+      ],
+      "support": 0.20520833333333333
+    },
+    {
+      "courses": [
+        "DB201",
+        "WEB201"
+      ],
+      "support": 0.18854166666666666
+    },
+    {
+      "courses": [
+        "DS301",
+        "ML301"
+      ],
+      "support": 0.18020833333333333
+    },
+    {
+      "courses": [
+        "PY101",
+        "WEB201"
+      ],
+      "support": 0.16979166666666667
+    },
+    {
+      "courses": [
+        "CLD301",
+        "PY101"
+      ],
+      "support": 0.16041666666666668
+    },
+    {
+      "courses": [
+        "DS301",
+        "ST201"
+      ],
+      "support": 0.15416666666666667
+    },
+    {
+      "courses": [
+        "CS101",
+        "ST201"
+      ],
+      "support": 0.14375
+    },
+    {
+      "courses": [
+        "CS101",
+        "DS301"
+      ],
+      "support": 0.13229166666666667
+    },
+    {
+      "courses": [
+        "CS101",
+        "DSA201"
+      ],
+      "support": 0.13229166666666667
+    },
+    {
+      "courses": [
+        "CS101",
+        "DB201"
+      ],
+      "support": 0.12916666666666668
+    },
+    {
+      "courses": [
+        "CS101",
+        "ML301"
+      ],
+      "support": 0.12604166666666666
+    },
+    {
+      "courses": [
+        "DB201",
+        "DS301"
+      ],
+      "support": 0.115625
+    }
+  ],
+  "top_sequential_relationships": [
+    {
+      "from": "CS101",
+      "to": "PY101",
+      "count": 278
+    },
+    {
+      "from": "PY101",
+      "to": "DSA201",
+      "count": 212
+    },
+    {
+      "from": "DS301",
+      "to": "ML301",
+      "count": 173
+    },
+    {
+      "from": "PY101",
+      "to": "DB201",
+      "count": 154
+    },
+    {
+      "from": "ST201",
+      "to": "DS301",
+      "count": 148
+    },
+    {
+      "from": "ST201",
+      "to": "ML301",
+      "count": 145
+    },
+    {
+      "from": "PY101",
+      "to": "ST201",
+      "count": 141
+    },
+    {
+      "from": "DB201",
+      "to": "CLD301",
+      "count": 124
+    },
+    {
+      "from": "DB201",
+      "to": "DS301",
+      "count": 111
+    },
+    {
+      "from": "DSA201",
+      "to": "ST201",
+      "count": 110
+    },
+    {
+      "from": "ML301",
+      "to": "MLO401",
+      "count": 104
+    },
+    {
+      "from": "AI401",
+      "to": "DL401",
+      "count": 103
+    },
+    {
+      "from": "DB201",
+      "to": "WEB201",
+      "count": 102
+    },
+    {
+      "from": "ML301",
+      "to": "AI401",
+      "count": 101
+    },
+    {
+      "from": "DS301",
+      "to": "CLD301",
+      "count": 97
+    },
+    {
+      "from": "CLD301",
+      "to": "MLO401",
+      "count": 92
+    },
+    {
+      "from": "DSA201",
+      "to": "DB201",
+      "count": 91
+    },
+    {
+      "from": "WEB201",
+      "to": "DB201",
+      "count": 79
+    },
+    {
+      "from": "PY101",
+      "to": "WEB201",
+      "count": 59
+    },
+    {
+      "from": "DS301",
+      "to": "MLO401",
+      "count": 50
+    }
+  ],
+  "course_counts": {
+    "ML301": 354,
+    "MLO401": 246,
+    "PY101": 625,
+    "DB201": 378,
+    "DS301": 355,
+    "ST201": 344,
+    "CS101": 329,
+    "CLD301": 258,
+    "WEB201": 246,
+    "DSA201": 253,
+    "AI401": 122,
+    "DL401": 115
+  }
+}

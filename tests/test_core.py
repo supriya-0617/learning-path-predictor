@@ -58,7 +58,14 @@ def test_milestone_4():
     assert len(result["catalogue"]) >= 10
 
 
-# Milestone 5: Analyze which course "itemsets" the model has learned.
-@pytest.mark.skip(reason="remove this line when you start milestone 5")
-def test_milestone_5():
-    raise NotImplementedError("write the test for milestone 5")
+def test_milestone_5(tmp_path):
+    from app.core import milestone_2, milestone_5
+
+    model_dir = tmp_path / "model"
+    milestone_2(n_sequences=60, seed=123, epochs=1, directory=str(model_dir))
+    result = milestone_5(directory=str(model_dir), seed=123, n_sequences=200)
+    assert result["evaluation"]["held_out_cases"] > 0
+    assert "model" in result["evaluation"]
+    assert "popularity_baseline" in result["evaluation"]
+    assert (model_dir / "evaluation.json").exists()
+

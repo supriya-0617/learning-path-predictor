@@ -1,0 +1,190 @@
+{
+  "held_out_cases": 240,
+  "model": {
+    "top_1_accuracy": 0.6708333492279053,
+    "top_3_hit_rate": 0.9791666865348816,
+    "top_5_hit_rate": 1.0,
+    "mrr": 0.8121528029441833
+  },
+  "popularity_baseline": {
+    "top_1_accuracy": 0.04583333432674408,
+    "top_3_hit_rate": 0.27916666865348816,
+    "top_5_hit_rate": 0.6708333492279053,
+    "mrr": 0.2908085584640503
+  },
+  "sample_predictions": [
+    {
+      "completed": [
+        "PY101"
+      ],
+      "actual_next": "DB201",
+      "model_top_5": [
+        "DB201",
+        "WEB201",
+        "ST201",
+        "DSA201",
+        "ML301"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "ML301",
+        "DS301",
+        "ST201",
+        "CLD301"
+      ]
+    },
+    {
+      "completed": [
+        "ST201",
+        "DS301",
+        "ML301"
+      ],
+      "actual_next": "MLO401",
+      "model_top_5": [
+        "MLO401",
+        "AI401",
+        "DL401",
+        "PY101",
+        "DSA201"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "PY101",
+        "CLD301",
+        "MLO401",
+        "DSA201"
+      ]
+    },
+    {
+      "completed": [
+        "CS101",
+        "PY101",
+        "DSA201"
+      ],
+      "actual_next": "DB201",
+      "model_top_5": [
+        "DB201",
+        "ST201",
+        "WEB201",
+        "DS301",
+        "ML301"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "ML301",
+        "DS301",
+        "ST201",
+        "CLD301"
+      ]
+    },
+    {
+      "completed": [
+        "PY101",
+        "ST201",
+        "AI401"
+      ],
+      "actual_next": "DL401",
+      "model_top_5": [
+        "DL401",
+        "ML301",
+        "CS101",
+        "MLO401",
+        "DS301"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "ML301",
+        "DS301",
+        "CLD301",
+        "MLO401"
+      ]
+    },
+    {
+      "completed": [
+        "PY101",
+        "DB201",
+        "DS301"
+      ],
+      "actual_next": "CLD301",
+      "model_top_5": [
+        "CLD301",
+        "MLO401",
+        "DSA201",
+        "CS101",
+        "ML301"
+      ],
+      "baseline_top_5": [
+        "ML301",
+        "ST201",
+        "CLD301",
+        "MLO401",
+        "DSA201"
+      ]
+    },
+    {
+      "completed": [
+        "PY101",
+        "ST201",
+        "ML301",
+        "AI401"
+      ],
+      "actual_next": "DL401",
+      "model_top_5": [
+        "DL401",
+        "MLO401",
+        "DS301",
+        "CS101",
+        "WEB201"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "DS301",
+        "CLD301",
+        "MLO401",
+        "DSA201"
+      ]
+    },
+    {
+      "completed": [
+        "PY101",
+        "DB201",
+        "DS301"
+      ],
+      "actual_next": "CLD301",
+      "model_top_5": [
+        "CLD301",
+        "MLO401",
+        "DSA201",
+        "CS101",
+        "ML301"
+      ],
+      "baseline_top_5": [
+        "ML301",
+        "ST201",
+        "CLD301",
+        "MLO401",
+        "DSA201"
+      ]
+    },
+    {
+      "completed": [
+        "WEB201"
+      ],
+      "actual_next": "CLD301",
+      "model_top_5": [
+        "DB201",
+        "CLD301",
+        "PY101",
+        "DS301",
+        "CS101"
+      ],
+      "baseline_top_5": [
+        "DB201",
+        "ML301",
+        "DS301",
+        "PY101",
+        "ST201"
+      ]
+    }
+  ]
+}

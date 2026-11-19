@@ -350,3 +350,145 @@ def milestone_4():
         "top_n_options": (1, 10),
         "widget": "st.multiselect",
     }
+
+
+def evaluate_course_model(
+    train_sequences: list[list[str]],
+    held_out_sequences: list[list[str]],
+    directory: str = "model",
+):
+    model, vocabulary = load_course_model(directory)
+    token_to_id = vocabulary["token_to_id"]
+    cases = [
+        (sequence[:-1], sequence[-1])
+        for sequence in held_out_sequences
+        if len(sequence) >= 2 and sequence[-1] in COURSE_CATALOGUE
+    ]
+
+    next_counts = {course_id: 0 for course_id in COURSE_IDS}
+    for sequence in train_sequences:
+        if len(sequence) >= 2:
+            for position, course_id in enumerate(sequence[:-1], start=1):
+                next_counts[sequence[position]] += 1
+
+    model_ranks = []
+    baseline_ranks = []
+    sample_predictions = []
+    for visible, target in cases:
+        visible = list(dict.fromkeys(course_id for course_id in visible if course_id in COURSE_CATALOGUE))
+        available = [course_id for course_id in COURSE_IDS if course_id not in visible]
+        if target not in available:
+            continue
+
+        input_ids = [1] + [token_to_id[course_id] for course_id in visible]
+        inputs = torch.tensor([input_ids], dtype=torch.long)
+        with torch.no_grad():
+            probabilities = torch.softmax(model(inputs)[0, -1], dim=-1)
+        model_scores = {
+            course_id: float(probabilities[token_to_id[course_id]].item())
+            for course_id in available
+        }
+        model_ranked = sorted(available, key=lambda course_id: (-model_scores[course_id], course_id))
+
+        baseline_ranked = sorted(
+            available,
+            key=lambda course_id: (-next_counts[course_id], course_id),
+        )
+        model_ranks.append(model_ranked.index(target) + 1)
+        baseline_ranks.append(baseline_ranked.index(target) + 1)
+        if len(sample_predictions) < 8:
+            sample_predictions.append({
+                "completed": visible,
+                "actual_next": target,
+                "model_top_5": model_ranked[:5],
+                "baseline_top_5": baseline_ranked[:5],
+            })
+
+    def metrics(ranks: list[int]) -> dict:
+        ranks_tensor = torch.tensor(ranks, dtype=torch.float32)
+        return {
+            "top_1_accuracy": float((ranks_tensor == 1).float().mean()) if ranks else 0.0,
+            "top_3_hit_rate": float((ranks_tensor <= 3).float().mean()) if ranks else 0.0,
+            "top_5_hit_rate": float((ranks_tensor <= 5).float().mean()) if ranks else 0.0,
+            "mrr": float((1.0 / ranks_tensor).mean()) if ranks else 0.0,
+        }
+
+    return {
+        "held_out_cases": len(model_ranks),
+        "model": metrics(model_ranks),
+        "popularity_baseline": metrics(baseline_ranks),
+        "sample_predictions": sample_predictions,
+    }
+
+
+def analyze_course_itemsets(
+    sequences: list[list[str]],
+    min_support: float = 0.05,
+):
+    n_sequences = len(sequences)
+    pair_counts = {}
+    pair_support = {}
+    course_counts = {}
+    sequential_counts = {}
+
+    for sequence in sequences:
+        unique = list(dict.fromkeys(sequence))
+        for course_id in unique:
+            course_counts[course_id] = course_counts.get(course_id, 0) + 1
+        for left in range(len(unique)):
+            for right in range(left + 1, len(unique)):
+                pair = tuple(sorted((unique[left], unique[right])))
+                pair_counts[pair] = pair_counts.get(pair, 0) + 1
+        for left, right in zip(sequence, sequence[1:]):
+            pair = (left, right)
+            sequential_counts[pair] = sequential_counts.get(pair, 0) + 1
+
+    frequent_pairs = [
+        {
+            "courses": list(pair),
+            "support": count / n_sequences,
+        }
+        for pair, count in pair_counts.items()
+        if count / n_sequences >= min_support
+    ]
+    frequent_pairs.sort(key=lambda row: (-row["support"], row["courses"]))
+
+    sequential_pairs = [
+        {
+            "from": left,
+            "to": right,
+            "count": count,
+        }
+        for (left, right), count in sequential_counts.items()
+    ]
+    sequential_pairs.sort(key=lambda row: (-row["count"], row["from"], row["to"]))
+
+    return {
+        "min_support": min_support,
+        "sequence_count": n_sequences,
+        "frequent_course_pairs": frequent_pairs[:20],
+        "top_sequential_relationships": sequential_pairs[:20],
+        "course_counts": course_counts,
+    }
+
+
+# --- Milestone 5: Analyze learned course itemsets and relationships.
+def milestone_5(directory: str = "model", seed: int = 42, n_sequences: int = 1200):
+    sequences = generate_mock_sequences(n_sequences=n_sequences, seed=seed)
+    train, held_out = split_sequences(sequences, train_ratio=0.8, seed=seed)
+    evaluation = evaluate_course_model(train, held_out, directory=directory)
+    itemsets = analyze_course_itemsets(train)
+    model_dir = Path(directory)
+    model_dir.mkdir(parents=True, exist_ok=True)
+    (model_dir / "evaluation.json").write_text(
+        json.dumps(evaluation, indent=2), encoding="utf-8"
+    )
+    (model_dir / "itemset_analysis.json").write_text(
+        json.dumps(itemsets, indent=2), encoding="utf-8"
+    )
+    return {
+        "evaluation": evaluation,
+        "itemsets": itemsets,
+        "evaluation_file": str(model_dir / "evaluation.json"),
+        "itemset_file": str(model_dir / "itemset_analysis.json"),
+    }
